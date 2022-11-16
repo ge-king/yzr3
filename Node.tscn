@@ -1,0 +1,175 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://TileMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://GlobalVars.gd" type="Script" id=3]
+[ext_resource path="res://CanvasLayer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://light_shadow_light.png" type="Texture" id=5]
+[ext_resource path="res://backmap.tscn" type="PackedScene" id=6]
+[ext_resource path="res://backgroundCastles.png" type="Texture" id=7]
+[ext_resource path="res://TextureRect.gd" type="Script" id=8]
+[ext_resource path="res://cityfar.png" type="Texture" id=9]
+[ext_resource path="res://citynear.png" type="Texture" id=10]
+[ext_resource path="res://clouds.png" type="Texture" id=11]
+[ext_resource path="res://backmap1`.tscn" type="PackedScene" id=12]
+[ext_resource path="res://sun.png" type="Texture" id=13]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Light2D
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="OccluderPolygon2D" id=2]
+polygon = PoolVector2Array( -22.494, 53.6771, -19.3309, 40.7987, 20.208, 40.1209, 22.9193, 53.2252 )
+
+[node name="Node" type="Node"]
+script = ExtResource( 3 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -1
+scroll_base_offset = Vector2( 0, -500 )
+scroll_base_scale = Vector2( 0.5, 0 )
+
+[node name="bg" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0, 1 )
+motion_mirroring = Vector2( 4096, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/bg"]
+margin_left = -922.381
+margin_top = -1132.15
+margin_right = 3173.62
+margin_bottom = 2739.85
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 2
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Light2D" type="Light2D" parent="ParallaxBackground/bg"]
+position = Vector2( 4179.12, 539.753 )
+scale = Vector2( 6.32378, 8.99907 )
+z_index = -1
+z_as_relative = false
+texture = ExtResource( 5 )
+energy = 1.16
+range_layer_min = -1
+range_layer_max = -1
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_gradient_length = 15.0
+script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/bg"]
+position = Vector2( 117.544, 781.308 )
+scale = Vector2( 0.305097, 0.296895 )
+texture = ExtResource( 13 )
+
+[node name="clouds" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.05, 1 )
+motion_mirroring = Vector2( 3470, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/clouds"]
+margin_left = -3.0
+margin_top = 499.0
+margin_right = 3470.0
+margin_bottom = 818.0
+texture = ExtResource( 11 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="cityfar" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.1, 1 )
+motion_mirroring = Vector2( 2550, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/cityfar"]
+margin_left = 1.33726
+margin_top = 658.923
+margin_right = 2756.35
+margin_bottom = 1763.93
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LightOccluder2D" parent="ParallaxBackground/cityfar" instance=ExtResource( 6 )]
+position = Vector2( 1271.03, 1186.09 )
+
+[node name="LightOccluder2D2" parent="ParallaxBackground/cityfar" instance=ExtResource( 12 )]
+position = Vector2( 3816.02, 1190.24 )
+
+[node name="citynear" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.5, 1 )
+motion_mirroring = Vector2( 2550, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxBackground/citynear"]
+margin_left = -4.63037
+margin_top = 921.059
+margin_right = 2750.37
+margin_bottom = 1734.06
+texture = ExtResource( 10 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" parent="." instance=ExtResource( 4 )]
+
+[node name="GUI" parent="CanvasLayer" index="0"]
+margin_left = 2.63994
+margin_right = 307.64
+
+[node name="Label4" parent="CanvasLayer/GUI/stats/Panel" index="3"]
+text = "YIKES, ZOMBIES, RUN! 3  v0.21 LIGHTING TEST"
+
+[node name="TileMap" parent="." instance=ExtResource( 2 )]
+z_index = 1
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+occluder_light_mask = 7
+tile_data = PoolIntArray( 720897, 8, 0, 720898, 7, 0, 720899, 7, 0, 720900, 7, 0, 720902, 0, 65536, 720903, 0, 3, 720904, 0, 3, 720905, 0, 3, 720906, 0, 3, 720907, 0, 3, 720908, 0, 3, 720909, 0, 3, 720910, 0, 3, 720911, 0, 3, 720912, 0, 3, 720913, 0, 3, 720914, 0, 65537, 786433, 5, 0, 786434, 4, 0, 786435, 4, 0, 786436, 4, 0, 786437, 4, 0, 786438, 0, 1, 786439, 0, 0, 786440, 0, 0, 786441, 0, 0, 786442, 0, 0, 786443, 0, 0, 786444, 0, 0, 786445, 0, 0, 786446, 0, 0, 786447, 0, 0, 786448, 0, 0, 786449, 0, 65538, 786450, 0, 2, 851969, 5, 0, 851970, 4, 0, 851971, 4, 0, 851972, 4, 0, 851973, 4, 0, 851974, 0, 1, 851975, 0, 0, 851976, 0, 0, 851977, 0, 0, 851978, 0, 0, 851979, 0, 0, 851980, 0, 0, 851981, 0, 0, 851982, 0, 0, 851983, 0, 0, 851984, 0, 0, 851985, 0, 0, 851986, 0, 2, 917505, 5, 0, 917506, 4, 0, 917507, 4, 0, 917508, 4, 0, 917509, 4, 0, 917510, 0, 1, 917511, 0, 0, 917512, 0, 0, 917513, 0, 0, 917514, 0, 0, 917515, 0, 0, 917516, 0, 0, 917517, 0, 0, 917518, 0, 0, 917519, 0, 0, 917520, 0, 0, 917521, 0, 0, 917522, 0, 2, 983041, 5, 0, 983042, 4, 0, 983043, 4, 0, 983044, 4, 0, 983045, 4, 0, 983046, 0, 1, 983047, 0, 0, 983048, 0, 0, 983049, 0, 131072, 983050, 0, 0, 983051, 0, 65539, 983052, 0, 0, 983053, 0, 0, 983054, 0, 0, 983055, 0, 0, 983056, 0, 0, 983057, 0, 0, 983058, 0, 2, 983059, 6, 0, 1048577, 5, 0, 1048578, 4, 0, 1048579, 4, 0, 1048580, 4, 0, 1048581, 4, 0, 1048582, 0, 1, 1048583, 0, 0, 1048584, 0, 65538, 1048585, 0, 131072, 1048586, 0, 0, 1048587, 0, 131072, 1048588, 0, 0, 1048589, 0, 131073, 1048590, 0, 0, 1048591, 0, 0, 1048592, 0, 0, 1048593, 0, 0, 1048594, 0, 2, 1048595, 6, 0, 1114113, 5, 0, 1114114, 4, 0, 1114115, 4, 0, 1114116, 4, 0, 1114117, 4, 0, 1114118, 0, 1, 1114119, 0, 0, 1114120, 0, 131072, 1114121, 0, 0, 1114122, 0, 0, 1114123, 0, 0, 1114124, 0, 0, 1114125, 0, 0, 1114126, 0, 0, 1114127, 0, 0, 1114128, 0, 131073, 1114129, 0, 0, 1114130, 0, 2, 1114131, 6, 0, 1179649, 5, 0, 1179650, 4, 0, 1179651, 4, 0, 1179652, 4, 0, 1179653, 4, 0, 1179654, 0, 1, 1179655, 0, 65539, 1179656, 0, 0, 1179657, 0, 0, 1179658, 0, 0, 1179659, 0, 0, 1179660, 0, 0, 1179661, 0, 0, 1179662, 0, 0, 1179663, 0, 131073, 1179664, 0, 65539, 1179665, 0, 0, 1179666, 0, 2, 1179667, 6, 0, 1245190, 0, 1, 1245191, 0, 65539, 1245192, 0, 0, 1245193, 0, 0, 1245194, 0, 131072, 1245195, 0, 65538, 1245196, 0, 65539, 1245197, 0, 65538, 1245198, 0, 131072, 1245199, 0, 0, 1245200, 0, 0, 1245201, 0, 0, 1245202, 0, 2, 1310726, 0, 1, 1310727, 0, 0, 1310728, 0, 65539, 1310729, 0, 0, 1310730, 0, 0, 1310731, 0, 65539, 1310732, 0, 0, 1310733, 0, 0, 1310734, 0, 0, 1310735, 0, 65539, 1310736, 0, 0, 1310737, 0, 0, 1310738, 0, 2, 1376262, 0, 1, 1376263, 0, 0, 1376264, 0, 0, 1376265, 0, 0, 1376266, 0, 0, 1376267, 0, 65539, 1376268, 0, 0, 1376269, 0, 0, 1376270, 0, 0, 1376271, 0, 0, 1376272, 0, 0, 1376273, 0, 0, 1376274, 0, 2, 1441798, 0, 1, 1441799, 0, 0, 1441800, 0, 0, 1441801, 0, 65539, 1441802, 0, 131072, 1441803, 0, 0, 1441804, 0, 131072, 1441805, 0, 0, 1441806, 0, 0, 1441807, 0, 131073, 1441808, 0, 0, 1441809, 0, 65538, 1441810, 0, 2, 1507334, 0, 1, 1507335, 0, 0, 1507336, 0, 0, 1507337, 0, 0, 1507338, 0, 0, 1507339, 0, 0, 1507340, 0, 0, 1507341, 0, 0, 1507342, 0, 65539, 1507343, 0, 0, 1507344, 0, 65539, 1507345, 0, 131072, 1507346, 0, 2, 1572870, 0, 1, 1572871, 0, 0, 1572872, 0, 0, 1572873, 0, 65539, 1572874, 0, 0, 1572875, 0, 131073, 1572876, 0, 131072, 1572877, 0, 0, 1572878, 0, 0, 1572879, 0, 0, 1572880, 0, 131072, 1572881, 0, 0, 1572882, 0, 2, 1638406, 0, 0, 1638407, 0, 0, 1638408, 0, 0, 1638409, 0, 0, 1638410, 0, 0, 1638411, 0, 65539, 1638412, 0, 0, 1638413, 0, 0, 1638414, 0, 0, 1638415, 0, 0, 1638416, 0, 0, 1638417, 0, 0, 1638418, 0, 2, 1703946, 0, 1, 1703947, 0, 65539, 1703948, 0, 131072, 1703949, 0, 0, 1703950, 0, 0, 1703951, 0, 0, 1703952, 0, 0, 1703953, 0, 0, 1703954, 0, 2, 1769482, 0, 1, 1769483, 0, 0, 1769484, 0, 0, 1769485, 0, 0, 1769486, 0, 65538, 1769487, 0, 0, 1769488, 0, 0, 1769489, 0, 0, 1769490, 0, 2, 1835018, 0, 1, 1835019, 0, 0, 1835020, 0, 0, 1835021, 0, 0, 1835022, 0, 131072, 1835023, 0, 131072, 1835024, 0, 131072, 1835025, 0, 65539, 1835026, 0, 2, 1900554, 0, 1, 1900555, 0, 0, 1900556, 0, 65539, 1900557, 0, 0, 1900558, 0, 0, 1900559, 0, 0, 1900560, 0, 0, 1900561, 0, 0, 1900562, 0, 2, 1966090, 0, 0, 1966091, 0, 0, 1966092, 0, 0, 1966093, 0, 0, 1966094, 0, 0, 1966095, 0, 0, 1966096, 0, 0, 1966097, 0, 0, 1966098, 0, 0 )
+
+[node name="KinematicBody2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1371.71, 1342.63 )
+
+[node name="Camera2D2" type="Camera2D" parent="KinematicBody2D"]
+position = Vector2( 9.55042, 110.139 )
+current = true
+smoothing_speed = 2.0
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="KinematicBody2D"]
+occluder = SubResource( 2 )
+
+[editable path="CanvasLayer"]
+[editable path="CanvasLayer/GUI"]
